@@ -1,0 +1,18 @@
+{# templates/profile/edit.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le profil{% endblock %}
+
+{% block body %}
+    <h1>Modifier le profil</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.prenom) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.password, {
+            'label': 'Nouveau mot de passe (POUR LE MOMENT NE PAS LAISSER VIDE laisser vide pour ne pas changer)'
+        }) }}
+        <button class="btn btn-primary">Enregistrer</button>
+    {{ form_end(form) }}
+{% endblock %}
