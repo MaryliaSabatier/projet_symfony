@@ -38,7 +38,16 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/moderateur, roles: ROLE_MODERATEUR }
         - { path: ^/utilisateur, roles: ROLE_USER }
+        #Pour le profil
         - { path: ^/profile, roles: ROLE_USER }
+        #Pour les posts 
+        - { path: ^/posts/create, roles: ROLE_USER }
+        - { path: ^/posts/\d+/edit, roles: ROLE_USER }
+        - { path: ^/posts/\d+/delete, roles: ROLE_USER }
+        #Pour les commentaires 
+        - { path: ^/posts/\d+/comments/create, roles: ROLE_USER }
+        - { path: ^/comments/\d+/edit, roles: ROLE_USER }
+        - { path: ^/comments/\d+/delete, roles: ROLE_USER }
 when@test:
     security:
         password_hashers:

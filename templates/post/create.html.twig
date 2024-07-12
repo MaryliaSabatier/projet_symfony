@@ -1,0 +1,15 @@
+{# templates/post/create.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un nouveau post{% endblock %}
+
+{% block body %}
+    <h1>Créer un nouveau post</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.contenu) }}
+        <button class="btn btn-primary">Créer</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_post_list') }}">Retour à la liste des posts</a>
+{% endblock %}

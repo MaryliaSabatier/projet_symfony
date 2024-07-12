@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du post{% endblock %}
+
+{% block body %}
+    <h1>{{ post.contenu }}</h1>
+    <p><small>Posté par {{ post.auteur.nom }} le {{ post.dateCreation|date('d/m/Y H:i') }}</small></p>
+
+    <h2>Commentaires</h2>
+    <ul>
+        {% for commentaire in post.commentaires %}
+            <li>
+                <p>{{ commentaire.contenu }}</p>
+                <p><small>Posté par {{ commentaire.auteur.nom }} le {{ commentaire.dateCreation|date('d/m/Y H:i') }}</small></p>
+                {% if is_granted('edit', commentaire) %}
+                    <a href="{{ path('app_comment_edit', {'id': commentaire.id}) }}">Modifier</a>
+                {% endif %}
+                {% if is_granted('delete', commentaire) %}
+                    <a href="{{ path('app_comment_delete', {'id': commentaire.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">Supprimer</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h3>Ajouter un commentaire</h3>
+    {{ form_start(form) }}
+        {{ form_row(form.contenu) }}
+        <button class="btn btn-primary">Créer</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_post_list') }}">Retour à la liste des posts</a>
+{% endblock %}
