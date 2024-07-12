@@ -14,22 +14,21 @@ class CommentaireController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
 
-    // Ajoutez un constructeur pour injecter EntityManagerInterface
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/posts/{postId}/comments/create', name: 'app_comment_create')]
-    public function create(Post $post, Request $request): Response
+    #[Route('/posts/{id}/comments/create', name: 'app_comment_create')]
+    public function createComment(Post $post, Request $request): Response
     {
         $commentaire = new Commentaire();
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $commentaire->setAuteur($this->getUser());
             $commentaire->setPost($post);
+            $commentaire->setAuteur($this->getUser());
             $commentaire->setDateCreation(new \DateTime());
 
             $this->entityManager->persist($commentaire);
@@ -44,10 +43,8 @@ class CommentaireController extends AbstractController
     }
 
     #[Route('/comments/{id}/edit', name: 'app_comment_edit')]
-    public function edit(Commentaire $commentaire, Request $request): Response
+    public function editComment(Commentaire $commentaire, Request $request): Response
     {
-        $this->denyAccessUnlessGranted('edit', $commentaire);
-
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
 
@@ -63,14 +60,11 @@ class CommentaireController extends AbstractController
     }
 
     #[Route('/comments/{id}/delete', name: 'app_comment_delete')]
-    public function delete(Commentaire $commentaire): Response
+    public function deleteComment(Commentaire $commentaire): Response
     {
-        $this->denyAccessUnlessGranted('delete', $commentaire);
-
-        $postId = $commentaire->getPost()->getId();
         $this->entityManager->remove($commentaire);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute('app_post_view', ['id' => $postId]);
+        return $this->redirectToRoute('app_post_view', ['id' => $commentaire->getPost()->getId()]);
     }
 }

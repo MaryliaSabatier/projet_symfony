@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Discussions{% endblock %}
+
+{% block body %}
+    <h1>Liste des Discussions</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Contenu</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+                <tr>
+                    <td>{{ post.id }}</td>
+                    <td>{{ post.titre }}</td>
+                    <td>{{ post.contenu }}</td>
+                    <td>{{ post.dateCreation|date('Y-m-d H:i') }}</td>
+                    <td>
+                        <a href="{{ path('admin_post_edit', {'id': post.id}) }}" class="btn btn-secondary">Modifier</a>
+                        <a href="{{ path('admin_post_delete', {'id': post.id}) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette discussion ?');">Supprimer</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <strong>Commentaires:</strong>
+                        <ul>
+                            {% for commentaire in post.commentaires %}
+                                <li>
+                                    {{ commentaire.contenu }} - 
+                                    <small>par {{ commentaire.auteur.nom }} le {{ commentaire.dateCreation|date('Y-m-d H:i') }}</small>
+                                    <a href="{{ path('admin_comment_edit', {'id': commentaire.id}) }}" class="btn btn-secondary btn-sm">Modifier</a>
+                                    <a href="{{ path('admin_comment_delete', {'id': commentaire.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">Supprimer</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <a href="{{ path('admin_comment_create', {'postId': post.id}) }}" class="btn btn-primary btn-sm">Ajouter un commentaire</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_dashboard') }}" class="btn btn-secondary">Retour au tableau de bord</a>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Événements{% endblock %}
+
+{% block body %}
+    <h1>Liste des Événements</h1>
+
+    <a href="{{ path('admin_event_create') }}" class="btn btn-primary mb-3">Créer un événement</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Date Début</th>
+                <th>Date Fin</th>
+                <th>Lieu</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+                <tr>
+                    <td>{{ event.id }}</td>
+                    <td>{{ event.titre }}</td>
+                    <td>{{ event.dateDebut|date('Y-m-d H:i') }}</td>
+                    <td>{{ event.dateFin|date('Y-m-d H:i') }}</td>
+                    <td>{{ event.lieu }}</td>
+                    <td>
+                        <a href="{{ path('admin_event_edit', {'id': event.id}) }}" class="btn btn-secondary">Modifier</a>
+                        <a href="{{ path('admin_event_delete', {'id': event.id}) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?');">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_dashboard') }}" class="btn btn-secondary">Retour au tableau de bord</a>
+{% endblock %}

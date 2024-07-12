@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ form.vars.value.id ? 'Modifier le commentaire' : 'Créer un commentaire' }}{% endblock %}
+
+{% block body %}
+    <h1>{{ form.vars.value.id ? 'Modifier le commentaire' : 'Créer un commentaire' }}</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.contenu) }}
+        <button class="btn btn-primary">{{ form.vars.value.id ? 'Modifier' : 'Créer' }}</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('admin_discussion_list') }}" class="btn btn-secondary">Retour à la liste des discussions</a>
+{% endblock %}

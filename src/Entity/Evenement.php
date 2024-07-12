@@ -16,6 +16,9 @@ class Evenement
     #[ORM\Column(type: "integer")]
     private ?int $id = null;
 
+    #[ORM\Column(type: "string", length: 255)]
+    private ?string $titre = null;
+
     #[ORM\Column(type: "text")]
     private string $contenu;
 
@@ -51,6 +54,18 @@ class Evenement
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): self
+    {
+        $this->titre = $titre;
+
+        return $this;
     }
 
     public function getContenu(): string

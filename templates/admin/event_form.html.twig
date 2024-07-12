@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ form.vars.value.id ? 'Modifier l\'événement' : 'Créer un événement' }}{% endblock %}
+
+{% block body %}
+    <h1>{{ form.vars.value.id ? 'Modifier l\'événement' : 'Créer un événement' }}</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.titre) }}
+        {{ form_row(form.contenu) }}
+        {{ form_row(form.dateDebut) }}
+        {{ form_row(form.dateFin) }}
+        {{ form_row(form.lieu) }}
+        <button class="btn btn-primary">{{ form.vars.value.id ? 'Modifier' : 'Créer' }}</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('admin_event_list') }}" class="btn btn-secondary">Retour à la liste des événements</a>
+{% endblock %}
