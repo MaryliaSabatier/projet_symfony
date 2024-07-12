@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Form;
 
 use App\Entity\User;
@@ -43,7 +42,9 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('inscription', SubmitType::class);
+            ->add('S_enregistrer', SubmitType::class, [
+                'label' => "S'enregistrer"
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

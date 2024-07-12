@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\User;
@@ -36,10 +35,11 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Auto login the user after registration
-            $security->login($user, 'main');
+            // Auto login the user after registration (optional)
+            // $security->login($user, 'main');
 
-            return $this->redirectToRoute('/register');
+            // Redirect to login page after registration
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [

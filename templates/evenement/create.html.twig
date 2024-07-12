@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un événement{% endblock %}
+
+{% block body %}
+    <h1>Créer un événement</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.contenu) }}
+        {{ form_row(form.lieu) }}
+        {{ form_row(form.dateDebut) }}
+        {{ form_row(form.dateFin) }}
+        <button class="btn btn-primary">Créer</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_discussion') }}">Retour à la discussion</a>
+{% endblock %}
