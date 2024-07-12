@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\CommentaireRepository;
@@ -14,13 +13,13 @@ class Commentaire
     #[ORM\Column(type: "integer")]
     private ?int $id = null;
 
-    #[ORM\Column(type: "text")]
+    #[ORM\Column(type: "text", nullable: false)]
     private string $contenu;
 
     #[ORM\Column(type: "datetime")]
     private DateTimeInterface $dateCreation;
 
-    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: "commentaires")]
+    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: "commentaires", cascade: ["persist"])]
     #[ORM\JoinColumn(nullable: true)]
     private ?Post $post = null;
 
@@ -100,5 +99,10 @@ class Commentaire
         $this->auteur = $auteur;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->contenu;
     }
 }

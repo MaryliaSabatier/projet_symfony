@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Utilisateurs{% endblock %}
+{% block title %}Liste des utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>Liste des Utilisateurs</h1>
+    <h1>Liste des utilisateurs</h1>
+
+    <a href="{{ path('admin_user_create') }}" class="btn btn-primary mb-3">Ajouter un utilisateur</a>
 
     <table class="table">
         <thead>
@@ -23,15 +25,14 @@
                     <td>{{ user.nom }}</td>
                     <td>{{ user.prenom }}</td>
                     <td>{{ user.email }}</td>
-                    <td>{{ user.roles|join(', ') }}</td>
+                    <td>{{ user.roles | join(', ') }}</td>
                     <td>
-                        <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-secondary">Modifier</a>
-                        <a href="{{ path('admin_user_delete', {'id': user.id}) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
+                        <a href="{{ path('admin_user_edit', {id: user.id}) }}" class="btn btn-secondary">Modifier</a>
+                        <a href="{{ path('admin_user_delete', {id: user.id}) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
                     </td>
                 </tr>
             {% endfor %}
+            <a href="{{ path('admin_dashboard') }}">Retour au tableau de bord</a>
         </tbody>
     </table>
-
-    <a href="{{ path('admin_dashboard') }}" class="btn btn-secondary">Retour au tableau de bord</a>
 {% endblock %}

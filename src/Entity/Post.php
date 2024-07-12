@@ -12,23 +12,23 @@ class Post
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: "integer")]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: "string", length: 255, nullable: false)]
     private ?string $titre = null;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: "text", nullable: false)]
     private string $contenu;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: "datetime")]
     private DateTimeInterface $dateCreation;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "posts")]
     #[ORM\JoinColumn(nullable: false)]
     private User $auteur;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Commentaire::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: "post", targetEntity: Commentaire::class, orphanRemoval: true)]
     private Collection $commentaires;
 
     public function __construct()

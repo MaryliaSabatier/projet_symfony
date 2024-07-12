@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Evenement;
@@ -182,33 +183,58 @@ class AdminController extends AbstractController
     public function discussionList(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
+    
         $posts = $this->entityManager->getRepository(Post::class)->findAll();
-
+    
         return $this->render('admin/discussion_list.html.twig', [
             'posts' => $posts,
         ]);
     }
+    
 
-    #[Route('/admin/post/{id}/edit', name: 'admin_post_edit')]
-    public function editPost(Post $post, Request $request): Response
+    #[Route('/admin/post/create', name: 'admin_post_create')]
+    public function createPost(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
+    
+        $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
+            $post->setAuteur($this->getUser());
+            $post->setDateCreation(new \DateTime());
+    
+            $this->entityManager->persist($post);
             $this->entityManager->flush();
-
+    
             return $this->redirectToRoute('admin_discussion_list');
         }
-
+    
         return $this->render('admin/post_form.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-
+    
+    #[Route('/admin/post/{id}/edit', name: 'admin_post_edit')]
+    public function editPost(Post $post, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+    
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->flush();
+    
+            return $this->redirectToRoute('admin_discussion_list');
+        }
+    
+        return $this->render('admin/post_form.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+    
     #[Route('/admin/post/{id}/delete', name: 'admin_post_delete')]
     public function deletePost(Post $post): Response
     {
@@ -224,26 +250,27 @@ class AdminController extends AbstractController
     public function createComment(Request $request, Post $post): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
+    
         $comment = new Commentaire();
         $form = $this->createForm(CommentaireType::class, $comment);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setPost($post);
             $comment->setAuteur($this->getUser());
             $comment->setDateCreation(new \DateTime());
-
+    
             $this->entityManager->persist($comment);
             $this->entityManager->flush();
-
+    
             return $this->redirectToRoute('admin_discussion_list');
         }
-
+    
         return $this->render('admin/comment_form.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+    
 
     #[Route('/admin/comment/{id}/edit', name: 'admin_comment_edit')]
     public function editComment(Commentaire $comment, Request $request): Response
