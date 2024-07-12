@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\PostRepository;
@@ -8,7 +7,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeInterface;
 
-
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
 {
@@ -16,6 +14,9 @@ class Post
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
     private ?int $id = null;
+
+    #[ORM\Column(type: "string", length: 255)]
+    private ?string $titre = null;
 
     #[ORM\Column(type: "text")]
     private string $contenu;
@@ -39,6 +40,18 @@ class Post
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): self
+    {
+        $this->titre = $titre;
+
+        return $this;
     }
 
     public function getContenu(): string

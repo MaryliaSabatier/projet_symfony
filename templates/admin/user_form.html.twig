@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ form.vars.value.id ? 'Modifier' : 'Créer' }} un utilisateur{% endblock %}
+
+{% block body %}
+    <h1>{{ form.vars.value.id ? 'Modifier' : 'Créer' }} un utilisateur</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.prenom) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.roles) }}
+        {{ form_row(form.plainPassword, {
+            'label': 'Mot de passe (laisser vide pour ne pas changer)',
+            'required': form.vars.value.id ? false : true
+        }) }}
+        <button class="btn btn-primary">{{ form.vars.value.id ? 'Enregistrer les modifications' : 'Créer' }}</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('admin_dashboard') }}">Retour au tableau de bord</a>
+{% endblock %}
