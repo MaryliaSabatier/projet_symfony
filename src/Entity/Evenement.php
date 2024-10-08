@@ -34,6 +34,10 @@ class Evenement
     #[ORM\JoinColumn(nullable: false)]
     private ?User $auteur = null;
 
+    #[ORM\ManyToOne(targetEntity: Discussion::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Discussion $discussion = null;
+
     // Getters et setters
 
     public function getId(): ?int
@@ -109,6 +113,18 @@ class Evenement
     public function setAuteur(?User $auteur): self
     {
         $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    public function getDiscussion(): ?Discussion
+    {
+        return $this->discussion;
+    }
+
+    public function setDiscussion(?Discussion $discussion): self
+    {
+        $this->discussion = $discussion;
 
         return $this;
     }

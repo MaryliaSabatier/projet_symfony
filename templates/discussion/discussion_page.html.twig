@@ -1,36 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Discussions{% endblock %}
+{% block title %}{{ discussion.nom }}{% endblock %}
 
 {% block body %}
-    <h1>Liste des discussions</h1>
+    <h1>{{ discussion.nom }}</h1>
 
-    <div class="row">
-        <div class="col-3">
-            <ul class="list-group">
-                {% for discussion in discussions %}
-                    <li class="list-group-item">
-                        <a href="#">{{ discussion.nom }}</a>
-                    </li>
-                {% else %}
-                    <li class="list-group-item">Aucune discussion trouvée.</li>
-                {% endfor %}
-            </ul>
-        </div>
+    <div class="discussion-posts">
+        <h2>Messages dans cette discussion</h2>
 
-        <div class="col-9">
-            <!-- Affichage du contenu des discussions à droite -->
-            <div class="discussion-content">
-                <!-- Ajoutez ici les événements et les réponses comme dans l'image -->
-                <h2>Événement</h2>
-                <p>LauraFestivités: Recherche bénévoles motivés pour la prochaine soirée...</p>
-                <p>Réponse : PaulCoordination, PierreTechnique, etc.</p>
-
-                <h3>Événement :</h3>
-                <p>Formation : "Maîtriser Excel pour la gestionbudgétaire"</p>
-                <p>Date : Jeudi 27 juin, 19h-22h</p>
-                <p>Lieu : salle informatique</p>
+        {% for post in discussion.posts %}
+            <div class="post">
+                <strong>{{ post.auteur.nomUtilisateur }}</strong> : {{ post.contenu }}
+                <p><small>Posté le {{ post.dateCreation|date('d/m/Y') }}</small></p>
             </div>
-        </div>
+        {% else %}
+            <p>Aucun message dans cette discussion.</p>
+        {% endfor %}
     </div>
+
+    <div class="add-post">
+        <h3>Ajouter un message</h3>
+        {{ form_start(postForm) }}
+            {{ form_widget(postForm) }}
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+        {{ form_end(postForm) }}
+    </div>
+
+    <a href="{{ path('discussion_list') }}" class="btn btn-secondary">Retour aux discussions</a>
 {% endblock %}

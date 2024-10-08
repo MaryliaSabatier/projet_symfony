@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Evenement;
+use App\Entity\Discussion;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -28,6 +30,12 @@ class EvenementType extends AbstractType
             ->add('dateFin', DateType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date de fin',
+            ])
+            ->add('discussion', EntityType::class, [
+                'class' => Discussion::class,
+                'choice_label' => 'nom',
+                'label' => 'Associer à une discussion',
+                'required' => false,
             ]);
     }
 
