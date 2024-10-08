@@ -1,5 +1,3 @@
-{# templates/admin/dashboard.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Tableau de bord Admin{% endblock %}
@@ -9,7 +7,10 @@
 
     <div class="buttons">
         <a href="{{ path('admin_user_management') }}" class="btn btn-primary">Gestion des utilisateurs</a>
-        <a href="{{ path('admin_event_management') }}" class="btn btn-primary">Gestion des événements (Commissions)</a>
+        <a href="{{ path('admin_event_management') }}" class="btn btn-primary">Gestion des événements</a>
+
+        <!-- Nouveau bouton pour accéder à la page des discussions -->
+        <a href="{{ path('discussion_page') }}" class="btn btn-primary">Accéder aux discussions</a>
     </div>
 
     <div class="logout">

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des discussions{% endblock %}
+
+{% block body %}
+    <h1>Liste des discussions</h1>
+
+    <ul class="list-group">
+        {% for discussion in discussions %}
+            <li class="list-group-item">
+                <a href="{{ path('discussion_show', {id: discussion.id}) }}">{{ discussion.nom }}</a>
+            </li>
+        {% else %}
+            <li class="list-group-item">Aucune discussion trouvée.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
